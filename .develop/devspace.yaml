@@ -7,7 +7,7 @@ vars:
 
   REGISTRY:
     source: env
-    default: ghcr.io/srl-labs/clabernetes
+    default: localhost:31789/srl-labs/clabernetes
 
   PULL_POLICY: IfNotPresent
 
@@ -32,7 +32,7 @@ vars:
     default: containerlab.dev
 
 localRegistry:
-  enabled: false
+  enabled: true
 
 images:
   clabernetes-dev:

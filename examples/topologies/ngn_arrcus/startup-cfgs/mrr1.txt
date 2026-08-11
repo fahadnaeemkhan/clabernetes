@@ -1,0 +1,718 @@
+set version 23.2R2-S3.8
+set system host-name mrr1.la1
+set system login class ENGINEERING idle-timeout 30
+set system login class MAINTENANCE idle-timeout 60
+set system login class MAINTENANCE permissions all
+set system login class MAINTENANCE permissions maintenance
+set system login class PROVISIONING idle-timeout 30
+set system login class READONLY idle-timeout 30
+set system login class SDNSS permissions all
+set system login class SUPERUSER idle-timeout 30
+set system login class SUPPORT idle-timeout 30
+set system login class SUPPORT-PLUS idle-timeout 30
+set system login user SDNSS uid 2001
+set system login user SDNSS class SDNSS
+set system login user engineering uid 3002
+set system login user engineering class ENGINEERING
+set system login user maint uid 2000
+set system login user maint class super-user
+set system login user maint authentication encrypted-password "$6$8Oxgfa/T$qgTcjnmIeHs4hYJKch8I/CpoAt4RhgkF8NTmlWB3UKBQtesV.DkWwg.ZoyDvmCSzTTUqBLqbFlCPx1RlnRn92."
+set system login user maintenance uid 2003
+set system login user maintenance class MAINTENANCE
+set system login user provisioning uid 2005
+set system login user provisioning class PROVISIONING
+set system login user readonly uid 2006
+set system login user readonly class READONLY
+set system login user superuser uid 2007
+set system login user superuser class MAINTENANCE
+set system login user support uid 2008
+set system login user support class SUPPORT
+set system login user support-plus uid 2009
+set system login user support-plus class SUPPORT-PLUS
+set system services ssh root-login deny-password
+set system services ssh protocol-version v2
+set system services ssh sftp-server
+set system services ssh client-alive-count-max 4
+set system services ssh client-alive-interval 900
+set system services ssh connection-limit 32
+set system services extension-service request-response grpc ssl address 0.0.0.0
+set system services extension-service request-response grpc ssl port 57400
+set system services extension-service request-response grpc ssl local-certificate grpc-server
+set system services extension-service request-response grpc ssl mutual-authentication certificate-authority nre
+set system services extension-service request-response grpc ssl mutual-authentication client-certificate-request no-certificate
+set system services extension-service request-response grpc ssl hot-reloading
+set system services netconf ssh
+set system backup-router 10.207.0.1
+set system backup-router destination 10.0.0.0/8
+set system backup-router destination 172.16.0.0/12
+set system backup-router destination 192.168.0.0/16
+set system authentication-order tacplus
+set system ports console authentication-order tacplus
+set system ports console log-out-on-disconnect
+set system ports auxiliary disable
+set system name-server 10.255.255.6
+set system name-server 10.191.255.6
+set system name-server 10.63.255.6
+set system tacplus-server 10.195.16.2 port 49
+set system tacplus-server 10.195.16.2 source-address 10.207.0.226
+set system tacplus-server 10.203.95.171 port 49
+set system tacplus-server 10.203.95.171 source-address 10.207.0.226
+set system accounting events login
+set system accounting events change-log
+set system accounting events interactive-commands
+set system accounting destination tacplus server 10.195.16.2 port 49
+set system accounting destination tacplus server 10.195.16.2 timeout 3
+set system accounting destination tacplus server 10.195.16.2 source-address 10.207.0.226
+set system accounting destination tacplus server 10.203.95.171 port 49
+set system accounting destination tacplus server 10.203.95.171 timeout 3
+set system accounting destination tacplus server 10.203.95.171 source-address 10.207.0.226
+set system syslog user * any emergency
+set system syslog host 10.195.16.119 any notice
+set system syslog host 10.195.16.119 source-address 10.207.0.226
+set system syslog host 10.195.16.119 structured-data
+set system syslog host 10.203.64.48 any notice
+set system syslog host 10.203.64.48 source-address 10.207.0.226
+set system syslog host 10.203.64.48 structured-data
+set system syslog file AUTH authorization any
+set system syslog file CHANGES change-log any
+set system syslog file CONTROL daemon any
+set system syslog file interactive-commands interactive-commands any
+set system syslog file interactive-commands archive size 20m
+set system syslog file interactive-commands archive files 10
+set system syslog file messages any notice
+set system syslog file messages archive size 20m
+set system syslog file messages archive files 10
+set system syslog file messages archive world-readable
+set system syslog file messages explicit-priority
+set system ddos-protection global flow-detection
+set system ddos-protection global flow-detection-mode automatic
+set system ddos-protection global flow-level-control police
+set system ddos-protection protocols arp aggregate flow-detection-mode on
+set system ntp server 79.99.152.1
+set system ntp server 79.99.152.10
+set system ntp source-address 206.197.169.211
+set chassis fpc 0 pic 1 port 0 speed 10g
+set chassis fpc 0 pic 1 port 1 speed 10g
+set chassis fpc 0 pic 1 port 2 speed 10g
+set chassis fpc 0 pic 1 port 3 speed 10g
+set chassis fpc 0 pic 1 port 4 speed 10g
+set chassis fpc 0 pic 1 port 5 speed 10g
+set chassis fpc 0 pic 1 port 6 speed 10g
+set chassis fpc 0 pic 1 port 7 speed 10g
+set chassis network-services enhanced-ip
+set security certificates certification-authority nre ca-name nre
+set security authentication-key-chains key-chain ISIS-KEY-CHAIN key 1 secret isisKey
+set security authentication-key-chains key-chain ISIS-KEY-CHAIN key 1 start-time "2000-1-1.00:00:00 +0000"
+set security authentication-key-chains key-chain ISIS-KEY-CHAIN key 1 algorithm md5
+set security authentication-key-chains key-chain ISIS-KEY-CHAIN key 1 options basic
+set security pki ca-profile nre ca-identity nre
+set interfaces et-0/0/0 description "mrr1.la1, et-0/0/0, O"
+set interfaces et-0/0/1 description "mrr1.la1, et-0/0/1, O"
+set interfaces et-0/0/2 description "mrr1.la1, et-0/0/2, O"
+set interfaces ge-0/0/1 description "mrr1.la1, xe-0/1/0, A, trunk to sp1.la1 1/1/c9/1, 22552132"
+set interfaces ge-0/0/1 mtu 9192
+set interfaces ge-0/0/1 unit 0 family inet address 51.162.228.16/31
+set interfaces ge-0/0/1 unit 0 family iso
+set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces xe-0/1/1 description "mrr1.la1, xe-0/1/1, O"
+set interfaces xe-0/1/2 description "mrr1.la1, xe-0/1/2, O"
+set interfaces xe-0/1/3 description "mrr1.la1, xe-0/1/3, O"
+set interfaces xe-0/1/4 description "mrr1.la1, xe-0/1/4, O"
+set interfaces xe-0/1/5 description "mrr1.la1, xe-0/1/5, O"
+set interfaces xe-0/1/6 description "mrr1.la1, xe-0/1/6, O"
+set interfaces xe-0/1/7 description "mrr1.la1, xe-0/1/7, A, trunk to sp2.la1 1/1/c9/1, 22552137"
+set interfaces xe-0/1/7 mtu 9192
+set interfaces xe-0/1/7 unit 0 family inet address 51.162.228.18/31
+set interfaces xe-0/1/7 unit 0 family iso
+set interfaces xe-0/1/7 unit 0 family mpls
+set interfaces fxp0 unit 0 family inet address 10.207.0.226/24
+set interfaces lo0 unit 0 family inet address 206.197.169.211/32
+set interfaces lo0 unit 0 family iso address 49.1012.2061.9716.9211.00
+set snmp location LA1:06:000060:0201
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.203.64.57/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.195.16.51/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.203.64.70/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.195.16.89/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 192.168.32.55/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.130.148.187/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 172.22.82.162/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.195.16.48/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.202.5.18/32
+set snmp client-list EQUINIX-SNMP-CLIENTS-RO 10.194.5.18/32
+set snmp community Public authorization read-only
+set snmp community Public client-list-name EQUINIX-SNMP-CLIENTS-RO
+set snmp trap-options source-address 10.207.0.226
+set snmp trap-group MONOLITH version v2
+set snmp trap-group MONOLITH targets 10.195.16.119
+set snmp trap-group MONOLITH targets 10.203.64.48
+set policy-options prefix-list BGP-NEIGHBORS apply-path "protocols bgp group <*> neighbor <*>"
+set policy-options prefix-list BGP-NEIGHBORS-VRF apply-path "routing-instances <*> protocols bgp group <*> neighbor <*>"
+set policy-options prefix-list DNS-SERVERS apply-path "system name-server <*>"
+set policy-options prefix-list ICCP-LOCAL apply-path "protocols iccp local-ip-addr <*>"
+set policy-options prefix-list ICCP-PEERS apply-path "protocols iccp peer <*>"
+set policy-options prefix-list IGP-SUBNETS 10.14.0.0/16
+set policy-options prefix-list IGP-SUBNETS 10.187.0.0/16
+set policy-options prefix-list IGP-SUBNETS 10.239.0.0/16
+set policy-options prefix-list IGP-SUBNETS 10.240.248.0/21
+set policy-options prefix-list IGP-SUBNETS 51.162.224.0/21
+set policy-options prefix-list IGP-SUBNETS 51.162.232.0/21
+set policy-options prefix-list IGP-SUBNETS 51.162.240.0/21
+set policy-options prefix-list IGP-SUBNETS 51.162.248.0/21
+set policy-options prefix-list IGP-SUBNETS 51.163.88.0/21
+set policy-options prefix-list IGP-SUBNETS 51.163.90.0/23
+set policy-options prefix-list IGP-SUBNETS 51.163.92.0/23
+set policy-options prefix-list IGP-SUBNETS 79.99.156.0/24
+set policy-options prefix-list IGP-SUBNETS 81.201.102.0/23
+set policy-options prefix-list IGP-SUBNETS 81.201.106.0/23
+set policy-options prefix-list IGP-SUBNETS 81.201.116.0/23
+set policy-options prefix-list IGP-SUBNETS 131.100.115.0/24
+set policy-options prefix-list IGP-SUBNETS 141.137.0.0/20
+set policy-options prefix-list IGP-SUBNETS 142.215.84.0/22
+set policy-options prefix-list IGP-SUBNETS 142.215.88.0/22
+set policy-options prefix-list IGP-SUBNETS 142.215.92.0/23
+set policy-options prefix-list IGP-SUBNETS 142.215.94.0/23
+set policy-options prefix-list IGP-SUBNETS 185.36.152.0/22
+set policy-options prefix-list IGP-SUBNETS 192.245.85.0/24
+set policy-options prefix-list IGP-SUBNETS 195.234.244.0/23
+set policy-options prefix-list IGP-SUBNETS 202.167.251.0/24
+set policy-options prefix-list LOCAL-FXP0 apply-path "interfaces fxp0 unit <*> family inet address <*>"
+set policy-options prefix-list LOCAL-IPV4 apply-path "interfaces <*> unit <*> family inet address <*>"
+set policy-options prefix-list LOCAL-IPV6 apply-path "interfaces <*> unit <*> family inet6 address <*>"
+set policy-options prefix-list LOCALHOST 127.0.0.1/32
+set policy-options prefix-list LOOPBACK-SUBNETS 27.111.172.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 27.111.252.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 46.183.152.0/21
+set policy-options prefix-list LOOPBACK-SUBNETS 46.183.157.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 51.162.1.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 51.163.64.0/23
+set policy-options prefix-list LOOPBACK-SUBNETS 51.163.94.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 64.191.205.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 64.191.236.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 81.201.106.0/23
+set policy-options prefix-list LOOPBACK-SUBNETS 91.215.132.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 100.21.21.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 101.97.40.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 103.8.181.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 103.140.208.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 122.50.116.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 131.100.112.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 142.215.0.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 142.215.12.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 142.215.78.0/23
+set policy-options prefix-list LOOPBACK-SUBNETS 142.215.80.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 142.215.83.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 147.123.104.0/21
+set policy-options prefix-list LOOPBACK-SUBNETS 180.189.12.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 183.177.62.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 185.36.152.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 193.201.92.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 193.201.192.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 195.234.244.0/23
+set policy-options prefix-list LOOPBACK-SUBNETS 195.245.85.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 202.79.212.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 202.167.228.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 202.167.229.0/26
+set policy-options prefix-list LOOPBACK-SUBNETS 202.167.229.128/26
+set policy-options prefix-list LOOPBACK-SUBNETS 202.167.229.192/26
+set policy-options prefix-list LOOPBACK-SUBNETS 206.197.169.0/24
+set policy-options prefix-list LOOPBACK-SUBNETS 206.223.142.0/24
+set policy-options prefix-list LOOPBACKS apply-path "interfaces lo0 unit 0 family inet address <*>"
+set policy-options prefix-list MANAGEMENT-NETS 10.3.8.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.4.19.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.4.20.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.5.8.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.5.15.45/32
+set policy-options prefix-list MANAGEMENT-NETS 10.5.161.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.5.193.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.5.218.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.5.222.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.6.8.2/32
+set policy-options prefix-list MANAGEMENT-NETS 10.6.8.35/32
+set policy-options prefix-list MANAGEMENT-NETS 10.6.8.70/32
+set policy-options prefix-list MANAGEMENT-NETS 10.7.7.70/32
+set policy-options prefix-list MANAGEMENT-NETS 10.7.8.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.7.22.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.8.248.11/32
+set policy-options prefix-list MANAGEMENT-NETS 10.8.248.13/32
+set policy-options prefix-list MANAGEMENT-NETS 10.8.248.20/32
+set policy-options prefix-list MANAGEMENT-NETS 10.8.248.21/32
+set policy-options prefix-list MANAGEMENT-NETS 10.10.14.128/25
+set policy-options prefix-list MANAGEMENT-NETS 10.113.64.192/26
+set policy-options prefix-list MANAGEMENT-NETS 10.129.39.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.129.194.0/23
+set policy-options prefix-list MANAGEMENT-NETS 10.130.148.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.130.248.11/32
+set policy-options prefix-list MANAGEMENT-NETS 10.130.248.12/32
+set policy-options prefix-list MANAGEMENT-NETS 10.130.248.31/32
+set policy-options prefix-list MANAGEMENT-NETS 10.130.248.32/32
+set policy-options prefix-list MANAGEMENT-NETS 10.132.164.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.132.165.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.144.148.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.145.161.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.145.190.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.145.191.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.172.20.128/25
+set policy-options prefix-list MANAGEMENT-NETS 10.172.150.128/25
+set policy-options prefix-list MANAGEMENT-NETS 10.192.148.20/32
+set policy-options prefix-list MANAGEMENT-NETS 10.192.169.209/32
+set policy-options prefix-list MANAGEMENT-NETS 10.192.169.220/32
+set policy-options prefix-list MANAGEMENT-NETS 10.192.248.11/32
+set policy-options prefix-list MANAGEMENT-NETS 10.192.248.13/32
+set policy-options prefix-list MANAGEMENT-NETS 10.192.248.20/32
+set policy-options prefix-list MANAGEMENT-NETS 10.192.248.21/32
+set policy-options prefix-list MANAGEMENT-NETS 10.194.1.27/32
+set policy-options prefix-list MANAGEMENT-NETS 10.194.1.28/32
+set policy-options prefix-list MANAGEMENT-NETS 10.194.5.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.195.16.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.197.192.38/32
+set policy-options prefix-list MANAGEMENT-NETS 10.197.192.157/32
+set policy-options prefix-list MANAGEMENT-NETS 10.198.15.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.198.15.15/32
+set policy-options prefix-list MANAGEMENT-NETS 10.198.17.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.201.150.108/32
+set policy-options prefix-list MANAGEMENT-NETS 10.201.248.11/32
+set policy-options prefix-list MANAGEMENT-NETS 10.201.248.13/32
+set policy-options prefix-list MANAGEMENT-NETS 10.201.248.31/32
+set policy-options prefix-list MANAGEMENT-NETS 10.201.248.32/32
+set policy-options prefix-list MANAGEMENT-NETS 10.202.1.27/32
+set policy-options prefix-list MANAGEMENT-NETS 10.202.1.28/32
+set policy-options prefix-list MANAGEMENT-NETS 10.202.5.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.203.64.0/25
+set policy-options prefix-list MANAGEMENT-NETS 10.203.95.128/25
+set policy-options prefix-list MANAGEMENT-NETS 10.203.160.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.203.231.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.207.0.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.207.48.0/24
+set policy-options prefix-list MANAGEMENT-NETS 10.216.27.0/25
+set policy-options prefix-list MANAGEMENT-NETS 10.216.27.128/25
+set policy-options prefix-list MANAGEMENT-NETS 10.219.32.208/29
+set policy-options prefix-list MANAGEMENT-NETS 10.227.32.208/29
+set policy-options prefix-list MANAGEMENT-NETS 10.233.0.0/25
+set policy-options prefix-list MANAGEMENT-NETS 10.241.136.0/23
+set policy-options prefix-list MANAGEMENT-NETS 10.247.3.0/24
+set policy-options prefix-list MANAGEMENT-NETS 147.28.136.192/26
+set policy-options prefix-list MANAGEMENT-NETS 172.16.1.51/32
+set policy-options prefix-list MANAGEMENT-NETS 172.16.10.70/32
+set policy-options prefix-list MANAGEMENT-NETS 172.16.19.1/32
+set policy-options prefix-list MANAGEMENT-NETS 172.16.124.41/32
+set policy-options prefix-list MANAGEMENT-NETS 172.22.64.217/32
+set policy-options prefix-list MANAGEMENT-NETS 172.22.64.218/32
+set policy-options prefix-list MANAGEMENT-NETS 172.22.64.221/32
+set policy-options prefix-list MANAGEMENT-NETS 172.22.64.236/32
+set policy-options prefix-list MANAGEMENT-NETS 172.22.64.242/32
+set policy-options prefix-list MANAGEMENT-NETS 172.22.82.162/32
+set policy-options prefix-list MANAGEMENT-NETS 177.126.175.128/26
+set policy-options prefix-list MANAGEMENT-NETS 179.107.34.5/32
+set policy-options prefix-list MANAGEMENT-NETS 179.107.40.0/26
+set policy-options prefix-list MANAGEMENT-NETS 187.0.196.128/26
+set policy-options prefix-list MANAGEMENT-NETS 192.168.0.0/16
+set policy-options prefix-list MANAGEMENT-NETS 200.143.175.128/26
+set policy-options prefix-list MANAGEMENT-NETS 200.143.178.12/32
+set policy-options prefix-list MANAGEMENT-NETS 200.150.148.87/32
+set policy-options prefix-list MANAGEMENT-NETS 200.150.148.88/32
+set policy-options prefix-list MANAGEMENT-NETS 200.198.191.10/32
+set policy-options prefix-list MANAGEMENT-NETS 200.198.191.11/32
+set policy-options prefix-list MULTICAST-ALL-ROUTERS 224.0.0.2/32
+set policy-options prefix-list NTP-SERVERS apply-path "system ntp server <*>"
+set policy-options prefix-list SNMP-CLIENT-LISTS apply-path "snmp client-list <*> <*>"
+set policy-options prefix-list SNMP-TRAP-GROUP apply-path "snmp trap-group <*> targets <*>"
+set policy-options prefix-list TACACS-SERVERS apply-path "system tacplus-server <*>"
+set policy-options prefix-list VRRP 224.0.0.18/32
+set policy-options prefix-list VRRP-V6 ff02::12/128
+set policy-options policy-statement ECMP then load-balance per-packet
+set policy-options community CONFIG-VERSION members 9:4
+set class-of-service classifiers dscp BA-CLASSIFIER-CORE-V4 forwarding-class NETWORK-CONTROL-CLASS-6 loss-priority low code-points 110000
+set class-of-service classifiers dscp BA-CLASSIFIER-CORE-V4 forwarding-class NETWORK-CONTROL-CLASS-7 loss-priority low code-points 111000
+set class-of-service classifiers dscp BA-CLASSIFIER-CORE-V4 forwarding-class SERVICE-CLASS-0 loss-priority low code-points 000000
+set class-of-service classifiers dscp BA-CLASSIFIER-CORE-V4 forwarding-class SERVICE-CLASS-1 loss-priority low code-points 001000
+set class-of-service classifiers dscp BA-CLASSIFIER-CORE-V4 forwarding-class SERVICE-CLASS-2 loss-priority low code-points 010000
+set class-of-service classifiers dscp BA-CLASSIFIER-CORE-V4 forwarding-class SERVICE-CLASS-3 loss-priority low code-points 011000
+set class-of-service classifiers dscp BA-CLASSIFIER-CORE-V4 forwarding-class SERVICE-CLASS-5 loss-priority low code-points 101000
+set class-of-service classifiers exp BA-CLASSIFIER-CORE-MPLS forwarding-class NETWORK-CONTROL-CLASS-6 loss-priority low code-points 110
+set class-of-service classifiers exp BA-CLASSIFIER-CORE-MPLS forwarding-class NETWORK-CONTROL-CLASS-7 loss-priority low code-points 111
+set class-of-service classifiers exp BA-CLASSIFIER-CORE-MPLS forwarding-class SERVICE-CLASS-0 loss-priority low code-points 000
+set class-of-service classifiers exp BA-CLASSIFIER-CORE-MPLS forwarding-class SERVICE-CLASS-1 loss-priority low code-points 001
+set class-of-service classifiers exp BA-CLASSIFIER-CORE-MPLS forwarding-class SERVICE-CLASS-2 loss-priority low code-points 010
+set class-of-service classifiers exp BA-CLASSIFIER-CORE-MPLS forwarding-class SERVICE-CLASS-3 loss-priority low code-points 011
+set class-of-service classifiers exp BA-CLASSIFIER-CORE-MPLS forwarding-class SERVICE-CLASS-5 loss-priority low code-points 101
+set class-of-service host-outbound-traffic forwarding-class NETWORK-CONTROL-CLASS-7
+set class-of-service host-outbound-traffic dscp-code-point 111000
+set class-of-service drop-profiles NC-6-DROP-PROFILE fill-level 0 drop-probability 0
+set class-of-service drop-profiles NC-6-DROP-PROFILE fill-level 100 drop-probability 100
+set class-of-service drop-profiles NC-7-DROP-PROFILE fill-level 0 drop-probability 0
+set class-of-service drop-profiles NC-7-DROP-PROFILE fill-level 100 drop-probability 100
+set class-of-service drop-profiles SC-0-DROP-PROFILE fill-level 0 drop-probability 0
+set class-of-service drop-profiles SC-0-DROP-PROFILE fill-level 100 drop-probability 100
+set class-of-service drop-profiles SC-1-DROP-PROFILE fill-level 0 drop-probability 0
+set class-of-service drop-profiles SC-1-DROP-PROFILE fill-level 100 drop-probability 100
+set class-of-service drop-profiles SC-2-DROP-PROFILE fill-level 0 drop-probability 0
+set class-of-service drop-profiles SC-2-DROP-PROFILE fill-level 100 drop-probability 100
+set class-of-service drop-profiles SC-3-DROP-PROFILE fill-level 0 drop-probability 0
+set class-of-service drop-profiles SC-3-DROP-PROFILE fill-level 100 drop-probability 100
+set class-of-service drop-profiles SC-5-DROP-PROFILE fill-level 0 drop-probability 0
+set class-of-service drop-profiles SC-5-DROP-PROFILE fill-level 100 drop-probability 100
+set class-of-service forwarding-classes class NETWORK-CONTROL-CLASS-7 queue-num 6
+set class-of-service forwarding-classes class NETWORK-CONTROL-CLASS-6 queue-num 5
+set class-of-service forwarding-classes class SERVICE-CLASS-5 queue-num 4
+set class-of-service forwarding-classes class SERVICE-CLASS-3 queue-num 3
+set class-of-service forwarding-classes class SERVICE-CLASS-2 queue-num 2
+set class-of-service forwarding-classes class SERVICE-CLASS-1 queue-num 1
+set class-of-service forwarding-classes class SERVICE-CLASS-0 queue-num 0
+set class-of-service forwarding-classes class best-effort queue-num 0
+set class-of-service interfaces xe-0/1/0 scheduler-map SCHEDULER-MAP
+set class-of-service interfaces xe-0/1/0 unit 0 classifiers dscp BA-CLASSIFIER-CORE-V4
+set class-of-service interfaces xe-0/1/0 unit 0 classifiers exp BA-CLASSIFIER-CORE-MPLS
+set class-of-service interfaces xe-0/1/0 unit 0 rewrite-rules dscp REWRITE-CORE-DSCP-V4
+set class-of-service interfaces xe-0/1/0 unit 0 rewrite-rules exp REWRITE-CORE-EXP-MPLS
+set class-of-service interfaces xe-0/1/7 scheduler-map SCHEDULER-MAP
+set class-of-service interfaces xe-0/1/7 unit 0 classifiers dscp BA-CLASSIFIER-CORE-V4
+set class-of-service interfaces xe-0/1/7 unit 0 classifiers exp BA-CLASSIFIER-CORE-MPLS
+set class-of-service interfaces xe-0/1/7 unit 0 rewrite-rules dscp REWRITE-CORE-DSCP-V4
+set class-of-service interfaces xe-0/1/7 unit 0 rewrite-rules exp REWRITE-CORE-EXP-MPLS
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class NETWORK-CONTROL-CLASS-6 loss-priority high code-point 110000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class NETWORK-CONTROL-CLASS-6 loss-priority low code-point 110000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class NETWORK-CONTROL-CLASS-7 loss-priority high code-point 111000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class NETWORK-CONTROL-CLASS-7 loss-priority low code-point 111000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-0 loss-priority high code-point 000000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-0 loss-priority low code-point 000000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-1 loss-priority high code-point 001000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-1 loss-priority low code-point 001000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-2 loss-priority high code-point 010000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-2 loss-priority low code-point 010000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-3 loss-priority high code-point 011000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-3 loss-priority low code-point 011000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-5 loss-priority high code-point 101000
+set class-of-service rewrite-rules dscp REWRITE-CORE-DSCP-V4 forwarding-class SERVICE-CLASS-5 loss-priority low code-point 101000
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class NETWORK-CONTROL-CLASS-6 loss-priority high code-point 110
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class NETWORK-CONTROL-CLASS-6 loss-priority low code-point 110
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class NETWORK-CONTROL-CLASS-7 loss-priority high code-point 111
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class NETWORK-CONTROL-CLASS-7 loss-priority low code-point 111
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-0 loss-priority high code-point 000
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-0 loss-priority low code-point 000
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-1 loss-priority high code-point 001
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-1 loss-priority low code-point 001
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-2 loss-priority high code-point 010
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-2 loss-priority low code-point 010
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-3 loss-priority high code-point 011
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-3 loss-priority low code-point 011
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-5 loss-priority high code-point 101
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class SERVICE-CLASS-5 loss-priority low code-point 101
+set class-of-service rewrite-rules exp REWRITE-CORE-EXP-MPLS forwarding-class best-effort loss-priority low code-point 000
+set class-of-service scheduler-maps SCHEDULER-MAP forwarding-class NETWORK-CONTROL-CLASS-6 scheduler SCHEDULER-NETWORK-CONTROL-CLASS-6
+set class-of-service scheduler-maps SCHEDULER-MAP forwarding-class NETWORK-CONTROL-CLASS-7 scheduler SCHEDULER-NETWORK-CONTROL-CLASS-7
+set class-of-service scheduler-maps SCHEDULER-MAP forwarding-class SERVICE-CLASS-0 scheduler SCHEDULER-SERVICE-CLASS-0
+set class-of-service scheduler-maps SCHEDULER-MAP forwarding-class SERVICE-CLASS-1 scheduler SCHEDULER-SERVICE-CLASS-1
+set class-of-service scheduler-maps SCHEDULER-MAP forwarding-class SERVICE-CLASS-2 scheduler SCHEDULER-SERVICE-CLASS-2
+set class-of-service scheduler-maps SCHEDULER-MAP forwarding-class SERVICE-CLASS-3 scheduler SCHEDULER-SERVICE-CLASS-3
+set class-of-service scheduler-maps SCHEDULER-MAP forwarding-class SERVICE-CLASS-5 scheduler SCHEDULER-SERVICE-CLASS-5
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-6 transmit-rate percent 5
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-6 buffer-size percent 5
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-6 priority high
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-6 drop-profile-map loss-priority any protocol any drop-profile NC-6-DROP-PROFILE
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-7 transmit-rate percent 5
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-7 buffer-size percent 5
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-7 priority high
+set class-of-service schedulers SCHEDULER-NETWORK-CONTROL-CLASS-7 drop-profile-map loss-priority any protocol any drop-profile NC-7-DROP-PROFILE
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-0 transmit-rate remainder
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-0 buffer-size percent 20
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-0 priority low
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-0 drop-profile-map loss-priority any protocol any drop-profile SC-0-DROP-PROFILE
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-1 transmit-rate percent 5
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-1 buffer-size percent 20
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-1 priority medium-low
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-1 drop-profile-map loss-priority any protocol any drop-profile SC-1-DROP-PROFILE
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-2 transmit-rate percent 20
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-2 buffer-size percent 20
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-2 priority medium-high
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-2 drop-profile-map loss-priority any protocol any drop-profile SC-2-DROP-PROFILE
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-3 transmit-rate percent 55
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-3 buffer-size percent 20
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-3 priority medium-high
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-3 drop-profile-map loss-priority any protocol any drop-profile SC-3-DROP-PROFILE
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-5 transmit-rate percent 10
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-5 transmit-rate rate-limit
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-5 buffer-size percent 5
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-5 priority strict-high
+set class-of-service schedulers SCHEDULER-SERVICE-CLASS-5 drop-profile-map loss-priority any protocol any drop-profile SC-5-DROP-PROFILE
+set firewall family inet filter ACCEPT-ALL term ACCEPT-ALL then accept
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from source-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from source-prefix-list BGP-NEIGHBORS
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from destination-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from protocol udp
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from source-port 49152-65535
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from destination-port 3784-3785
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from destination-port 4784
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD from destination-port 6784
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD then count ACCEPT-BFD
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD then accept
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD-INIT from source-prefix-list ICCP-PEERS
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD-INIT from destination-prefix-list ICCP-LOCAL
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD-INIT from protocol tcp
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD-INIT then count ACCEPT-BFD-INIT
+set firewall family inet filter ACCEPT-BFD term ACCEPT-BFD-INIT then accept
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP from source-prefix-list BGP-NEIGHBORS
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP from destination-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP from protocol tcp
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP from port bgp
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP then count ACCEPT-BGP
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP then accept
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP-VRF from source-prefix-list BGP-NEIGHBORS-VRF
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP-VRF from destination-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP-VRF from protocol tcp
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP-VRF from port bgp
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP-VRF then count ACCEPT-BGP-VRF
+set firewall family inet filter ACCEPT-BGP term ACCEPT-BGP-VRF then accept
+set firewall family inet filter ACCEPT-DNS term ACCEPT-DNS from source-prefix-list DNS-SERVERS
+set firewall family inet filter ACCEPT-DNS term ACCEPT-DNS from source-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-DNS term ACCEPT-DNS from port domain
+set firewall family inet filter ACCEPT-DNS term ACCEPT-DNS then policer 10MBPS-POLICER
+set firewall family inet filter ACCEPT-DNS term ACCEPT-DNS then count ACCEPT-DNS
+set firewall family inet filter ACCEPT-DNS term ACCEPT-DNS then accept
+set firewall family inet filter ACCEPT-GNMI term ALLOW-GNMI from source-prefix-list MANAGEMENT-NETS
+set firewall family inet filter ACCEPT-GNMI term ALLOW-GNMI from destination-port 57400
+set firewall family inet filter ACCEPT-GNMI term ALLOW-GNMI then count ACCEPT-GNMI
+set firewall family inet filter ACCEPT-GNMI term ALLOW-GNMI then accept
+set firewall family inet filter ACCEPT-ICMP term NO-ICMP-FRAGMENTS from is-fragment
+set firewall family inet filter ACCEPT-ICMP term NO-ICMP-FRAGMENTS from protocol icmp
+set firewall family inet filter ACCEPT-ICMP term NO-ICMP-FRAGMENTS then count NO-ICMP-FRAGMENTS
+set firewall family inet filter ACCEPT-ICMP term NO-ICMP-FRAGMENTS then log
+set firewall family inet filter ACCEPT-ICMP term NO-ICMP-FRAGMENTS then discard
+set firewall family inet filter ACCEPT-ICMP term ACCEPT-ICMP from protocol icmp
+set firewall family inet filter ACCEPT-ICMP term ACCEPT-ICMP then policer 5MBPS-POLICER
+set firewall family inet filter ACCEPT-ICMP term ACCEPT-ICMP then count ACCEPT-ICMP
+set firewall family inet filter ACCEPT-ICMP term ACCEPT-ICMP then accept
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-SSH filter ACCEPT-SSH
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-NTP filter ACCEPT-NTP
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-TACACS filter ACCEPT-TACACS
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-TRACEROUTE filter ACCEPT-TRACEROUTE
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-ICMP filter ACCEPT-ICMP
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-SNMP filter ACCEPT-SNMP
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-NETCONF filter ACCEPT-NETCONF
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-DNS filter ACCEPT-DNS
+set firewall family inet filter ACCEPT-MGMT-SERVICES term ACCEPT-GNMI filter ACCEPT-GNMI
+set firewall family inet filter ACCEPT-NETCONF term ALLOW-MANAGEMENT-NETS from source-prefix-list MANAGEMENT-NETS
+set firewall family inet filter ACCEPT-NETCONF term ALLOW-MANAGEMENT-NETS from destination-port 830
+set firewall family inet filter ACCEPT-NETCONF term ALLOW-MANAGEMENT-NETS then count ACCEPT-NETCONF
+set firewall family inet filter ACCEPT-NETCONF term ALLOW-MANAGEMENT-NETS then accept
+set firewall family inet filter ACCEPT-NETWORK-SERVICES term ACCEPT-BGP filter ACCEPT-BGP
+set firewall family inet filter ACCEPT-NETWORK-SERVICES term ACCEPT-VRRP filter ACCEPT-VRRP
+set firewall family inet filter ACCEPT-NETWORK-SERVICES term ACCEPT-BFD filter ACCEPT-BFD
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP from source-prefix-list NTP-SERVERS
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP from source-prefix-list LOOPBACKS
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP from source-prefix-list LOCAL-FXP0
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP from protocol udp
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP from port ntp
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP then policer 1MBPS-POLICER
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP then count ACCEPT-NTP
+set firewall family inet filter ACCEPT-NTP term ACCEPT-NTP then accept
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP from source-prefix-list SNMP-CLIENT-LISTS
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP from destination-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP from protocol udp
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP from destination-port snmp
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP then policer 5MBPS-POLICER
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP then count ACCEPT-SNMP
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP then accept
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP-TRAPS from source-prefix-list LOOPBACKS
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP-TRAPS from source-prefix-list LOCAL-FXP0
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP-TRAPS from destination-prefix-list SNMP-TRAP-GROUP
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP-TRAPS from protocol udp
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP-TRAPS from destination-port snmptrap
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP-TRAPS then count ACCEPT-SNMP-TRAPS
+set firewall family inet filter ACCEPT-SNMP term ACCEPT-SNMP-TRAPS then accept
+set firewall family inet filter ACCEPT-SSH term ALLOW-MANAGEMENT-NETS from source-prefix-list MANAGEMENT-NETS
+set firewall family inet filter ACCEPT-SSH term ALLOW-MANAGEMENT-NETS from destination-port ssh
+set firewall family inet filter ACCEPT-SSH term ALLOW-MANAGEMENT-NETS then count ACCEPT-SSH
+set firewall family inet filter ACCEPT-SSH term ALLOW-MANAGEMENT-NETS then accept
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS from source-prefix-list TACACS-SERVERS
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS from destination-prefix-list LOCAL-FXP0
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS from protocol tcp
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS from protocol udp
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS from source-port tacacs
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS from source-port tacacs-ds
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS from tcp-established
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS then policer 1MBPS-POLICER
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS then count ACCEPT-TACACS
+set firewall family inet filter ACCEPT-TACACS term ACCEPT-TACACS then accept
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-UDP from destination-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-UDP from protocol udp
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-UDP from ttl 1
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-UDP from destination-port 33435-33450
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-UDP then policer 5MBPS-POLICER
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-UDP then count ACCEPT-TRACEROUTE-UDP
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-UDP then accept
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP from destination-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP from protocol icmp
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP from ttl 1
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP from icmp-type echo-request
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP from icmp-type timestamp
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP from icmp-type time-exceeded
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP then policer 5MBPS-POLICER
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP then count ACCEPT-TRACEROUTE-ICMP
+set firewall family inet filter ACCEPT-TRACEROUTE term ACCEPT-TRACEROUTE-ICMP then accept
+set firewall family inet filter ACCEPT-VRRP term ACCEPT-VRRP from source-prefix-list LOCAL-IPV4
+set firewall family inet filter ACCEPT-VRRP term ACCEPT-VRRP from destination-prefix-list VRRP
+set firewall family inet filter ACCEPT-VRRP term ACCEPT-VRRP from protocol vrrp
+set firewall family inet filter ACCEPT-VRRP term ACCEPT-VRRP from protocol ah
+set firewall family inet filter ACCEPT-VRRP term ACCEPT-VRRP then count ACCEPT-VRRP
+set firewall family inet filter ACCEPT-VRRP term ACCEPT-VRRP then accept
+set firewall family inet filter DISCARD-ALL term DISCARD-TRACEROUTE-TCP from destination-prefix-list LOCAL-IPV4
+set firewall family inet filter DISCARD-ALL term DISCARD-TRACEROUTE-TCP from protocol tcp
+set firewall family inet filter DISCARD-ALL term DISCARD-TRACEROUTE-TCP from ttl 1
+set firewall family inet filter DISCARD-ALL term DISCARD-TRACEROUTE-TCP then count DISCARD-TRACEROUTE-TCP
+set firewall family inet filter DISCARD-ALL term DISCARD-TRACEROUTE-TCP then discard
+set firewall family inet filter DISCARD-ALL term DISCARD-IP-OPTIONS from ip-options any
+set firewall family inet filter DISCARD-ALL term DISCARD-IP-OPTIONS then count DISCARD-IP-OPTIONS
+set firewall family inet filter DISCARD-ALL term DISCARD-IP-OPTIONS then log
+set firewall family inet filter DISCARD-ALL term DISCARD-IP-OPTIONS then discard
+set firewall family inet filter DISCARD-ALL term DISCARD-TCP from protocol tcp
+set firewall family inet filter DISCARD-ALL term DISCARD-TCP then count DISCARD-TCP
+set firewall family inet filter DISCARD-ALL term DISCARD-TCP then log
+set firewall family inet filter DISCARD-ALL term DISCARD-TCP then discard
+set firewall family inet filter DISCARD-ALL term DISCARD-UDP from protocol udp
+set firewall family inet filter DISCARD-ALL term DISCARD-UDP then count DISCARD-UDP
+set firewall family inet filter DISCARD-ALL term DISCARD-UDP then log
+set firewall family inet filter DISCARD-ALL term DISCARD-UDP then discard
+set firewall family inet filter DISCARD-ALL term DISCARD-ICMP from protocol icmp
+set firewall family inet filter DISCARD-ALL term DISCARD-ICMP then count DISCARD-ICMP
+set firewall family inet filter DISCARD-ALL term DISCARD-ICMP then log
+set firewall family inet filter DISCARD-ALL term DISCARD-ICMP then discard
+set firewall family inet filter DISCARD-ALL term DISCARD-UNKNOWN then count DISCARD-UNKNOWN
+set firewall family inet filter DISCARD-ALL term DISCARD-UNKNOWN then log
+set firewall family inet filter DISCARD-ALL term DISCARD-UNKNOWN then discard
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-V6 from source-prefix-list BGP-NEIGHBORS
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-V6 from destination-prefix-list LOCAL-IPV6
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-V6 from port bgp
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-V6 then count ACCEPT-BGP-V6
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-V6 then accept
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-VRF-V6 from source-prefix-list BGP-NEIGHBORS-VRF
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-VRF-V6 from destination-prefix-list LOCAL-IPV6
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-VRF-V6 from port bgp
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-VRF-V6 then count ACCEPT-BGP-VRF-V6
+set firewall family inet6 filter ACCEPT-BGP-V6 term ACCEPT-BGP-VRF-V6 then accept
+set firewall family inet6 filter ACCEPT-ICMP6 term ACCEPT-ICMP6 from next-header icmp6
+set firewall family inet6 filter ACCEPT-ICMP6 term ACCEPT-ICMP6 then policer 5MBPS-POLICER
+set firewall family inet6 filter ACCEPT-ICMP6 term ACCEPT-ICMP6 then count ACCEPT-ICMP6
+set firewall family inet6 filter ACCEPT-ICMP6 term ACCEPT-ICMP6 then accept
+set firewall family inet6 filter ACCEPT-NETWORK-SERVICES-V6 term ACCEPT-BGP-V6 filter ACCEPT-BGP-V6
+set firewall family inet6 filter ACCEPT-NETWORK-SERVICES-V6 term ACCEPT-ICMP6 filter ACCEPT-ICMP6
+set firewall family inet6 filter ACCEPT-NETWORK-SERVICES-V6 term ACCEPT-VRRP-V6 filter ACCEPT-VRRP-V6
+set firewall family inet6 filter ACCEPT-NETWORK-SERVICES-V6 term DENYALL then count DISCARD-V6
+set firewall family inet6 filter ACCEPT-NETWORK-SERVICES-V6 term DENYALL then discard
+set firewall family inet6 filter ACCEPT-VRRP-V6 term ACCEPT-VRRP-V6 from destination-prefix-list VRRP-V6
+set firewall family inet6 filter ACCEPT-VRRP-V6 term ACCEPT-VRRP-V6 from next-header vrrp
+set firewall family inet6 filter ACCEPT-VRRP-V6 term ACCEPT-VRRP-V6 then accept
+set firewall policer 10MBPS-POLICER if-exceeding bandwidth-limit 10m
+set firewall policer 10MBPS-POLICER if-exceeding burst-size-limit 91920
+set firewall policer 10MBPS-POLICER then discard
+set firewall policer 128KBPS-POLICER if-exceeding bandwidth-limit 128k
+set firewall policer 128KBPS-POLICER if-exceeding burst-size-limit 32k
+set firewall policer 128KBPS-POLICER then discard
+set firewall policer 1MBPS-POLICER if-exceeding bandwidth-limit 1m
+set firewall policer 1MBPS-POLICER if-exceeding burst-size-limit 91920
+set firewall policer 1MBPS-POLICER then discard
+set firewall policer 512KBPS-POLICER if-exceeding bandwidth-limit 512k
+set firewall policer 512KBPS-POLICER if-exceeding burst-size-limit 64k
+set firewall policer 512KBPS-POLICER then discard
+set firewall policer 5MBPS-POLICER if-exceeding bandwidth-limit 5m
+set firewall policer 5MBPS-POLICER if-exceeding burst-size-limit 91920
+set firewall policer 5MBPS-POLICER then discard
+set firewall disable-arp-policers
+set routing-options rib inet.3 static route 0.0.0.0/0 discard
+set routing-options rib inet6.3 static route ::/0 discard
+set routing-options router-id 206.197.169.211
+set routing-options autonomous-system 16023
+set routing-options static route 10.0.0.0/8 next-hop 10.207.0.1
+set routing-options static route 10.0.0.0/8 no-readvertise
+set routing-options static route 172.16.0.0/12 next-hop 10.207.0.1
+set routing-options static route 172.16.0.0/12 no-readvertise
+set routing-options static route 192.168.0.0/16 next-hop 10.207.0.1
+set routing-options static route 192.168.0.0/16 no-readvertise
+set routing-options rib-groups BGPLU-RIB-COPY import-rib inet.3
+set routing-options rib-groups BGPLU-RIB-COPY import-rib inet.0
+set routing-options rib-groups BGPLU-RIB-COPY import-rib inet6.3
+set routing-options forwarding-table export ECMP
+set protocols bgp group INTERNAL_RRC type internal
+set protocols bgp group INTERNAL_RRC multihop no-nexthop-change
+set protocols bgp group INTERNAL_RRC local-address 206.197.169.211
+set protocols bgp group INTERNAL_RRC log-updown
+set protocols bgp group INTERNAL_RRC family inet labeled-unicast rib-group BGPLU-RIB-COPY
+set protocols bgp group INTERNAL_RRC family inet labeled-unicast add-path send path-count 6
+set protocols bgp group INTERNAL_RRC family inet labeled-unicast aigp
+set protocols bgp group INTERNAL_RRC family inet labeled-unicast rib inet.3
+set protocols bgp group INTERNAL_RRC family inet unicast
+set protocols bgp group INTERNAL_RRC family inet-vpn unicast no-install
+set protocols bgp group INTERNAL_RRC family inet6-vpn unicast no-install
+set protocols bgp group INTERNAL_RRC family l2vpn signaling no-install
+set protocols bgp group INTERNAL_RRC family evpn signaling no-install
+set protocols bgp group INTERNAL_RRC family route-target external-paths 256
+set protocols bgp group INTERNAL_RRC cluster 206.197.169.211
+set protocols bgp group INTERNAL_RRC local-as 16023
+set protocols bgp group INTERNAL_RRC multipath
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.193 description se1.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.194 description se2.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.199 description use1.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.200 description use2.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.203 description use1.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.204 description use2.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.205 description use3.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.206 description use4.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.214 description use5.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.215 description use6.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.216 description use7.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.217 description use8.la1
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.228 description use9.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.229 description use10.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.230 description use11.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.231 description use12.la4
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.224 description use13.la3
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.225 description use14.la3
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.226 description use15.la3
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.227 description use16.la3
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.219 description use17.la7
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.222 description use18.la7
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.220 description use19.la7
+set protocols bgp group INTERNAL_RRC neighbor 206.197.169.223 description use20.la7
+set protocols bgp group INTERNAL_RRC neighbor 91.215.132.30 description use1.ne.nit.arrcus
+set protocols bgp group INTERNAL_RRC neighbor 91.215.132.35 description use10-ngn.gv51
+set protocols bgp group INTERNAL_RRC neighbor 185.36.152.10 description use19-auto
+set protocols bgp group REGION_RRC type internal
+set protocols bgp group REGION_RRC multihop no-nexthop-change
+set protocols bgp group REGION_RRC local-address 206.197.169.211
+set protocols bgp group REGION_RRC log-updown
+set protocols bgp group REGION_RRC family inet labeled-unicast rib-group BGPLU-RIB-COPY
+set protocols bgp group REGION_RRC family inet labeled-unicast add-path receive
+set protocols bgp group REGION_RRC family inet labeled-unicast add-path send path-count 6
+set protocols bgp group REGION_RRC family inet labeled-unicast aigp
+set protocols bgp group REGION_RRC family inet labeled-unicast rib inet.3
+set protocols bgp group REGION_RRC family inet-vpn unicast no-install
+set protocols bgp group REGION_RRC family inet6-vpn unicast no-install
+set protocols bgp group REGION_RRC family l2vpn signaling no-install
+set protocols bgp group REGION_RRC family evpn signaling no-install
+set protocols bgp group REGION_RRC family route-target external-paths 256
+set protocols bgp group REGION_RRC local-as 4200000000
+set protocols bgp group REGION_RRC local-as private
+set protocols bgp group REGION_RRC multipath
+set protocols bgp group REGION_RRC neighbor 206.223.142.9 description grr1.dc6
+set protocols bgp group REGION_RRC neighbor 206.223.142.10 description grr2.dc2
+set protocols bgp group REGION_RRC neighbor 206.197.169.7 description grr3.sv5
+set protocols bgp group REGION_RRC neighbor 206.197.169.8 description grr4.sv5
+set protocols bgp bgp-error-tolerance
+set protocols isis interface ge-0/0/1.0 level 1 disable
+set protocols isis interface ge-0/0/1.0 level 2 metric 20
+set protocols isis interface ge-0/0/1.0 link-protection
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface xe-0/1/7.0 level 1 disable
+set protocols isis interface xe-0/1/7.0 level 2 metric 20
+set protocols isis interface xe-0/1/7.0 link-protection
+set protocols isis interface xe-0/1/7.0 point-to-point
+set protocols isis interface lo0.0 passive
+set protocols isis level 1 disable
+set protocols isis level 2 authentication-key-chain ISIS-KEY-CHAIN
+set protocols isis level 2 wide-metrics-only
+set protocols isis reference-bandwidth 400g
+set protocols isis overload
+set protocols lldp port-id-subtype interface-name
+set protocols lldp port-description-type interface-description
+set protocols lldp interface fxp0
+set protocols lldp interface ge-0/0/1
+set protocols lldp interface xe-0/1/7

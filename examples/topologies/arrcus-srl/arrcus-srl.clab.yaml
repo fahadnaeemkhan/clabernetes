@@ -1,0 +1,63 @@
+# topology: 2 Arrcus ArcOS (VM) + 2 Nokia SR Linux nodes connected in a full mesh
+#
+# NOTE: the ArcOS VM image's data ports start at swp1 (there is no swp0)
+#
+# Full mesh links (6 total):
+#   arcos1 -- arcos2  (arcos1:swp1 <-> arcos2:swp1)
+#   arcos1 -- srl1    (arcos1:swp2 <-> srl1:e1-1)
+#   arcos1 -- srl2    (arcos1:swp3 <-> srl2:e1-1)
+#   arcos2 -- srl1    (arcos2:swp2 <-> srl1:e1-2)
+#   arcos2 -- srl2    (arcos2:swp3 <-> srl2:e1-2)
+#   srl1   -- srl2    (srl1:e1-3   <-> srl2:e1-3)
+#
+# IP addressing (/31 point-to-point):
+#   arcos1-arcos2 : 192.168.1.0/31  (arcos1:.0, arcos2:.1)
+#   arcos1-srl1   : 192.168.1.2/31  (arcos1:.2, srl1:.3)
+#   arcos1-srl2   : 192.168.1.4/31  (arcos1:.4, srl2:.5)
+#   arcos2-srl1   : 192.168.1.6/31  (arcos2:.6, srl1:.7)
+#   arcos2-srl2   : 192.168.1.8/31  (arcos2:.8, srl2:.9)
+#   srl1-srl2     : 192.168.1.10/31 (srl1:.10, srl2:.11)
+
+name: arrcus-srl
+
+topology:
+  nodes:
+    arcos1:
+      kind: arrcus_arcos
+      image: registry.clabernetes:5000/arrcus_vm:8.2.1-P5
+      startup-config: arcos1.cfg
+
+    arcos2:
+      kind: arrcus_arcos
+      image: registry.clabernetes:5000/arrcus_vm:8.2.1-P5
+      startup-config: arcos2.cfg
+
+    srl1:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+      startup-config: srl1.cfg
+
+    srl2:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+      startup-config: srl2.cfg
+
+  links:
+    # arcos1 -- arcos2
+    - endpoints: ["arcos1:swp1", "arcos2:swp1"]
+    # arcos1 -- srl1
+    - endpoints: ["arcos1:swp2", "srl1:e1-1"]
+    # arcos1 -- srl2
+    - endpoints: ["arcos1:swp3", "srl2:e1-1"]
+    # arcos2 -- srl1
+    - endpoints: ["arcos2:swp2", "srl1:e1-2"]
+    # arcos2 -- srl2
+    - endpoints: ["arcos2:swp3", "srl2:e1-2"]
+    # srl1 -- srl2
+    - endpoints: ["srl1:e1-3", "srl2:e1-3"]
+    - endpoints: ["arcos1:swp4", "arcos2:swp4"]
+    - endpoints: ["arcos1:swp5", "arcos2:swp5"]
+    - endpoints: ["arcos1:swp6", "arcos2:swp6"]
+    - endpoints: ["arcos1:swp7", "arcos2:swp7"]
+    - endpoints: ["arcos1:swp8", "arcos2:swp8"]
+    - endpoints: ["arcos1:swp9", "arcos2:swp9"]

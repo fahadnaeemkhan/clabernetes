@@ -1,0 +1,38 @@
+---
+apiVersion: clabernetes.containerlab.dev/v1alpha1
+kind: Topology
+metadata:
+  name: srl02
+  namespace: c9s-srl02
+spec:
+  deployment:
+    filesFromConfigMap:
+        srl1:
+          - filePath: srl1.cfg
+            configMapName: srl02-srl1-startup-config
+            configMapPath: startup-config
+            mode: read
+        srl2:
+          - filePath: srl2.cfg
+            configMapName: srl02-srl2-startup-config
+            configMapPath: startup-config
+            mode: read
+  naming: prefixed
+  definition:
+    containerlab: |-
+          # topology documentation: http://containerlab.dev/lab-examples/two-srls/
+          name: srl02
+
+          topology:
+            nodes:
+              srl1:
+                kind: nokia_srlinux
+                image: ghcr.io/nokia/srlinux
+                startup-config: srl1.cfg
+              srl2:
+                kind: nokia_srlinux
+                image: ghcr.io/nokia/srlinux
+                startup-config: srl2.cfg
+
+            links:
+              - endpoints: ["srl1:e1-1", "srl2:e1-1"]

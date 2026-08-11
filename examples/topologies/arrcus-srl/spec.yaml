@@ -1,0 +1,6 @@
+
+imagePull:
+  # criSockOverride: /run/k3s/containerd/containerd.sock
+  pullThroughOverride: never
+  insecureRegistries:
+    - registry.clabernetes:5000

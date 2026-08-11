@@ -1,0 +1,85 @@
+name: ngn-arrcus
+
+topology:
+  kinds:
+    nokia_srlinux:
+      type: ixr-d2l
+      image: ghcr.io/nokia/srlinux
+  nodes:
+    ec-gw1:
+      kind: juniper_vmx
+      image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
+      startup-config: startup-cfgs/ecgw.cfg
+      labels:
+        role: "EC-GW"
+    ec-mrr1:
+      kind: juniper_vmx
+      image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
+      startup-config: startup-cfgs/ecmrr.cfg
+      labels:
+        role: "EC-MRR"
+    mrr1:
+      kind: juniper_vmx
+      image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
+      startup-config: startup-cfgs/mrr1.txt
+      labels:
+        role: "MRR"
+    se1:
+      kind: juniper_vmx
+      image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
+      labels:
+        role: "LEAF"
+    sp1:
+      kind: nokia_sros
+      image: registry.clabernetes:5000/vr-sros:25.3.R2
+      type: "cpu=2 ram=6 slot=A chassis=SR-1s card=xcm-1s mda/1=s36-400gb-qsfpdd"
+      license: licenses/sros.txt
+      startup-config: startup-cfgs/sp1.cfg
+      # ports:
+      # - 50050:22
+      # - 50051:830
+      labels:
+        role: "SPINE"
+    use1:
+      kind: nokia_sros
+      image: registry.clabernetes:5000/vr-sros:25.3.R2
+      type: "cpu=2 ram=6 slot=A chassis=SR-1s card=xcm-1s mda/1=s36-400gb-qsfpdd"
+      license: licenses/sros.txt
+      labels:
+        role: "LEAF"
+    arcos-leaf-a-side:
+      kind: arrcus_arcos
+      image: registry.clabernetes:5000/arrcus_vm:8.2.1-P5
+      labels:
+        role: "LEAF"
+      startup-config: startup-cfgs/arrcus-leaf-side-a.cfg
+    arcos-leaf-z-side:
+      kind: arrcus_arcos
+      image: registry.clabernetes:5000/arrcus_vm:8.2.1-P5
+      labels:
+        role: "LEAF"
+      startup-config: startup-cfgs/arrcus-leaf-side-a.cfg
+    ixia-c:
+      kind: keysight_ixia-c-one
+      image: ghcr.io/open-traffic-generator/ixia-c-one:1.58.0-16
+      ports:
+        - 8443:8443
+      labels:
+        role: "TGN"
+
+  links:
+    # Arrcus - Spine
+    - endpoints: ["sp1:eth1", "arcos-leaf-a-side:swp1"]
+    - endpoints: ["sp1:eth3", "arcos-leaf-z-side:swp1"]
+
+    # Underlay links
+    - endpoints: ["sp1:eth9", "mrr1:eth2"]
+    - endpoints: ["sp1:eth13", "ec-gw1:eth1"]
+    - endpoints: ["sp1:eth18", "ec-mrr1:eth1"]
+    - endpoints: ["sp1:eth32", "use1:eth6"]
+    - endpoints: ["sp1:eth4", "se1:eth2"]
+
+    # TGN
+    - endpoints: ["ec-gw1:eth4", "ixia-c:eth1"]
+    - endpoints: ["arcos-leaf-a-side:swp2", "ixia-c:eth2"]
+    - endpoints: ["arcos-leaf-z-side:swp2", "ixia-c:eth3"]

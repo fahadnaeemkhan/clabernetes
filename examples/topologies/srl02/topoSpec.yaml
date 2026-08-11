@@ -1,0 +1,9 @@
+deployment:
+  scheduling:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                clabernetes/topologyOwner: srl02
+            topologyKey: kubernetes.io/hostname

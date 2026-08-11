@@ -1,0 +1,14 @@
+deployment:
+  scheduling:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: DoesNotExist
+imagePull:
+  # criSockOverride: /run/k3s/containerd/containerd.sock
+  pullThroughOverride: never
+  insecureRegistries:
+    - registry.clabernetes:5000
