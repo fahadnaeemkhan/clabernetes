@@ -10,23 +10,35 @@ topology:
       kind: juniper_vmx
       image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
       startup-config: startup-cfgs/ecgw.cfg
+      cpu: 8
+      memory: 8192M
+      shm-size: 256MB
       labels:
         role: "EC-GW"
     ec-mrr1:
       kind: juniper_vmx
       image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
       startup-config: startup-cfgs/ecmrr.cfg
+      cpu: 8
+      memory: 8192M
+      shm-size: 256MB
       labels:
         role: "EC-MRR"
     mrr1:
       kind: juniper_vmx
       image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
       startup-config: startup-cfgs/mrr1.txt
+      cpu: 8
+      memory: 8192M
+      shm-size: 256MB
       labels:
         role: "MRR"
     se1:
       kind: juniper_vmx
       image: registry.clabernetes:5000/juniper_vmx:23.2R2-S2.5
+      cpu: 8
+      memory: 8192M
+      shm-size: 256MB
       labels:
         role: "LEAF"
     sp1:

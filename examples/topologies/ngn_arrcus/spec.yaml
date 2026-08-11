@@ -1,4 +1,33 @@
 deployment:
+  resources:
+    ec-gw1:
+      requests:
+        cpu: "8"
+        memory: 8192Mi
+      limits:
+        cpu: "8"
+        memory: 8192Mi
+    ec-mrr1:
+      requests:
+        cpu: "8"
+        memory: 8192Mi
+      limits:
+        cpu: "8"
+        memory: 8192Mi
+    mrr1:
+      requests:
+        cpu: "8"
+        memory: 8192Mi
+      limits:
+        cpu: "8"
+        memory: 8192Mi
+    se1:
+      requests:
+        cpu: "8"
+        memory: 8192Mi
+      limits:
+        cpu: "8"
+        memory: 8192Mi
   scheduling:
     affinity:
       nodeAffinity:

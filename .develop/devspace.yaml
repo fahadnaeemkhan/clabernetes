@@ -9,7 +9,7 @@ vars:
     source: env
     default: localhost:31789/srl-labs/clabernetes
 
-  PULL_POLICY: IfNotPresent
+  PULL_POLICY: Always
 
   CLABERNETES: clabernetes
   IMAGE_BASE: ${REGISTRY}/${CLABERNETES}

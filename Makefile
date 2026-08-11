@@ -12,8 +12,8 @@ include .mk/e2e.makefile
 
 ## Image names + tag used by the build-* targets. IMAGE_TAG defaults to "latest"
 ## for one-off local builds; the e2e flow overrides it (IMAGE_TAG=dev-latest).
-IMAGE_TAG ?= latest
-IMAGE_BASE ?= ghcr.io/srl-labs/clabernetes
+IMAGE_TAG ?= dev-latest
+IMAGE_BASE ?= localhost:32191/srl-labs/clabernetes
 MANAGER_IMAGE ?= $(IMAGE_BASE)/clabernetes-manager
 LAUNCHER_IMAGE ?= $(IMAGE_BASE)/clabernetes-launcher
 UI_IMAGE ?= $(IMAGE_BASE)/clabernetes-ui
